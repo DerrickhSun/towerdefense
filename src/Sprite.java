@@ -23,16 +23,17 @@ public class Sprite extends JButton{
 	Image img;
 	int tempy;
 	int tempx;
-	
-	int vx = 2, vy = -10, ay = 1;
+	int sizeX = 40;
+	int sizeY = 45;
+	int vx = 0, vy = 0, ay = 1;
 	
 	AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 
 	// constructs player as affinetransform instead of image
 	public Sprite(String filename) {
 		tx = AffineTransform.getTranslateInstance(x, y);
-		x = 455;
-		y = 400;
+		x = 0;
+		y = 405;
 		img = getImage(filename);
 
 		this.setBounds(x,y,100,100);
@@ -51,10 +52,11 @@ public class Sprite extends JButton{
 
 
 	// move with input from driver
-	public void move() {
-	//	tx.translate(vx, vy);
+	public void move() {		
+		tx.translate(vx, vy);
+		//System.out.println(vx + " " + vy);
 	}
-
+	
 	// use find affinetransform current position
 	public int gety() {
 		return (int) tx.getTranslateY();
@@ -105,11 +107,11 @@ public class Sprite extends JButton{
 	    Graphics2D g3 = resizedImg.createGraphics();
 
 	    g3.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g3.drawImage(img, 0, 0, 200, 200, null);
+	    g3.drawImage(img, 0, 0, sizeX, sizeY, null);
 	    g3.dispose();
 	    
 	    //example rotating image on call to paint
-	    tx.rotate(1,50,50);
+//	    tx.rotate(1,50,50);
 		g2.drawImage(resizedImg, tx, null);
 		
 		
@@ -117,7 +119,7 @@ public class Sprite extends JButton{
 	}
 
 	// converts image to make it drawable in paint
-	private Image getImage(String path) {
+	protected Image getImage(String path) {
 		Image tempImage = null;
 		try {
 			URL imageURL = Sprite.class.getResource(path);
@@ -127,5 +129,3 @@ public class Sprite extends JButton{
 		}
 		return tempImage;
 	}
-
-}
